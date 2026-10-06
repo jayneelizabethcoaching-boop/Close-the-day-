@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Close the Day | Jayne Elizabeth Coaching</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --navy-900:#071d34;
+      --navy-800:#0d243f;
+      --navy-700:#152d4d;
+      --navy-600:#1b3557;
+      --pink-200:#f7d9e4;
+      --pink-300:#f4bfd5;
+      --pink-400:#ec9fbd;
+      --pink-500:#df7da5;
+      --white:#f9f7f5;
+      --ivory:#f1eee9;
+      --muted:#dfe4ea;
+      --line:rgba(255,255,255,0.12);
+      --panel:rgba(22,38,58,0.72);
+      --panel-strong:#12263f;
+      --success:#d9f5ff;
+      --danger:#ffb7c9;
+      --shadow:0 20px 60px rgba(3,11,20,0.35);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{
+      margin:0;
+      background:var(--navy-900);
+      color:var(--white);
+      font-family:'Inter',sans-serif;
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior:smooth;
+    }
+
+    body{
+      min-height:100vh;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(223,125,165,0.12), transparent 28%),
+        radial-gradient(circle at 80% 0%, rgba(255,255,255,0.04), transparent 20%),
+        linear-gradient(180deg, #081d34 0%, #071b2f 100%);
+    }
+
+    .wrap{
+      width:min(520px, calc(100% - 24px));
+      margin:0 auto;
+    }
+
+    .top-brand{
+      padding:40px 0 20px;
+      text-align:center;
+    }
+
+    .jec-lockup{
+      margin:0 auto 24px auto;
+      width:min(400px, 80vw);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      position:relative;
+    }
+
+    .jec-letter{
+      font-family:'Cormorant Garamond', serif;
+      font-weight:600;
+      font-size:clamp(110px, 22vw, 300px);
+      line-height:0.8;
+      letter-spacing:-0.07em;
+      color:rgba(249,247,245,0.96);
+      text-transform:uppercase;
+      transform:scaleY(0.95);
+      text-shadow:0 10px 24px rgba(0,0,0,0.15);
+    }
+
+    .brand-line{
+      margin-top:14px;
+      letter-spacing:0.4em;
+      text-transform:uppercase;
+      font-size:clamp(12px, 2.4vw, 18px);
+      color:rgba(249,247,245,0.9);
+      font-weight:500;
+    }
+
+    .tagline{
+      margin-top:12px;
+      font-size:clamp(13px, 2.2vw, 16px);
+      color:rgba(249,247,245,0.75);
+      letter-spacing:0.02em;
+      line-height:1.4;
+      font-weight:400;
+    }
+
+    .history-box{
+      margin-top:24px;
+      background:rgba(255,255,255,0.02);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:14px 14px 8px;
+      box-shadow:var(--shadow);
+    }
+
+    .history-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:12px;
+    }
+
+    .history-top h3{
+      margin:0;
+      text-transform:uppercase;
+      letter-spacing:0.18em;
+      font-size:11px;
+      color:var(--muted);
+      font-weight:600;
+    }
+
+    .history-top .count{
+      color:var(--pink-200);
+      font-size:12px;
+      letter-spacing:0.08em;
+      font-weight:600;
+    }
+
+    .bars{
+      display:flex;
+      gap:10px;
+      align-items:flex-end;
+      height:92px;
+      padding:0 4px;
+    }
+
+    .bar-col{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      align-items:center;
+      height:100%;
+    }
+
+    .bar-num{
+      font-size:11px;
+      letter-spacing:0.08em;
+      color:var(--white);
+      opacity:0.9;
+      margin-bottom:7px;
+      font-weight:700;
+    }
+
+    .bar{
+      width:100%;
+      min-height:10px;
+      border-radius:10px 10px 0 0;
+      background:rgba(255,255,255,0.18);
+      border:1px solid rgba(255,255,255,0.06);
+      transition:height .3s ease;
+    }
+
+    .bar.today{
+      background:linear-gradient(180deg, var(--pink-300), var(--pink-500));
+      border-color:rgba(255,255,255,0.12);
+    }
+
+    .bar-lbl{
+      margin-top:6px;
+      color:rgba(249,247,245,0.75);
+      font-size:10px;
+      letter-spacing:0.06em;
+      text-transform:uppercase;
+      text-align:center;
+    }
+
+    .bar-low{
+      margin-top:2px;
+      color:var(--pink-200);
+      font-size:9px;
+      letter-spacing:0.04em;
+      text-align:center;
+      min-height:12px;
+    }
+
+    .pattern{
+      margin-top:12px;
+      color:rgba(249,247,245,0.8);
+      font-size:12px;
+      line-height:1.5;
+    }
+
+    .pattern b{ color:var(--pink-200); }
+
+    .empty{
+      color:rgba(249,247,245,0.8);
+      padding:8px 0 2px;
+      font-size:14px;
+    }
+
+    .form-shell{
+      margin-top:24px;
+      padding:0;
+    }
+
+    .field{
+      margin-bottom:22px;
+    }
+
+    .field label{
+      display:block;
+      margin-bottom:8px;
+      color:var(--white);
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:0.2em;
+      font-weight:700;
+    }
+
+    .field input[type="text"]{
+      width:100%;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.15);
+      border-radius:999px;
+      padding:15px 16px;
+      color:var(--white);
+      font-size:15px;
+      outline:none;
+      transition:border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .field input[type="text"]::placeholder{
+      color:rgba(249,247,245,0.46);
+    }
+
+    .field input[type="text"]:focus{
+      border-color:var(--pink-400);
+      box-shadow:0 0 0 3px rgba(236,159,189,0.15);
+    }
+
+    .name-hint{
+      margin-top:8px;
+      color:rgba(249,247,245,0.72);
+      font-size:12px;
+      line-height:1.4;
+    }
+
+    .name-hint.warn{
+      color:var(--danger);
+    }
+
+    .question{
+      padding:20px 0 12px;
+      border-top:1px solid rgba(255,255,255,0.09);
+    }
+
+    .question-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:10px;
+    }
+
+    .question h4{
+      margin:0;
+      font-size:18px;
+      line-height:1.2;
+      letter-spacing:0.04em;
+      text-transform:uppercase;
+      font-weight:700;
+      color:var(--white);
+    }
+
+    .rest-btn{
+      border:none;
+      background:rgba(255,255,255,0.08);
+      color:var(--white);
+      border-radius:999px;
+      padding:7px 12px;
+      font-size:10px;
+      letter-spacing:0.14em;
+      text-transform:uppercase;
+      font-weight:700;
+      cursor:pointer;
+      transition:all .2s ease;
+      flex-shrink:0;
+    }
+
+    .rest-btn.on{
+      background:linear-gradient(135deg, var(--pink-300), var(--pink-500));
+      color:#1a1a1f;
+      box-shadow:0 8px 18px rgba(223,125,165,0.25);
+    }
+
+    .q-hint{
+      margin-bottom:14px;
+      font-size:12px;
+      line-height:1.5;
+      color:rgba(249,247,245,0.72);
+    }
+
+    .score-row{
+      display:grid;
+      grid-template-columns:repeat(10, minmax(0, 1fr));
+      gap:6px;
+    }
+
+    .score-btn{
+      appearance:none;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.14);
+      color:var(--white);
+      border-radius:999px;
+      height:40px;
+      font-size:13px;
+      font-weight:600;
+      cursor:pointer;
+      transition:all .15s ease;
+    }
+
+    .score-btn:hover{
+      border-color:rgba(236,159,189,0.8);
+      transform:translateY(-1px);
+    }
+
+    .score-btn.on{
+      background:linear-gradient(135deg, var(--pink-300), var(--pink-500));
+      color:#111827;
+      border-color:transparent;
+      box-shadow:0 10px 22px rgba(223,125,165,0.25);
+    }
+
+    .question.off .score-btn{
+      opacity:0.4;
+      pointer-events:none;
+    }
+
+    textarea{
+      width:100%;
+      resize:vertical;
+      min-height:110px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.14);
+      border-radius:20px;
+      padding:14px 16px;
+      color:var(--white);
+      font-family:inherit;
+      font-size:15px;
+      outline:none;
+      transition:border-color .2s ease, box-shadow .2s ease;
+    }
+
+    textarea::placeholder{
+      color:rgba(249,247,245,0.46);
+    }
+
+    textarea:focus{
+      border-color:var(--pink-400);
+      box-shadow:0 0 0 3px rgba(236,159,189,0.15);
+    }
+
+    .submit-btn{
+      margin-top:26px;
+      width:100%;
+      border:none;
+      border-radius:999px;
+      background:linear-gradient(135deg, var(--pink-300), var(--pink-500));
+      color:#0d1724;
+      font-weight:800;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      height:56px;
+      font-size:14px;
+      cursor:pointer;
+      transition:transform .15s ease, box-shadow .15s ease, opacity .2s ease;
+      box-shadow:0 12px 30px rgba(223,125,165,0.28);
+    }
+
+    .submit-btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .submit-btn:disabled{
+      opacity:0.5;
+      cursor:not-allowed;
+      transform:none;
+      box-shadow:none;
+    }
+
+    .err{
+      display:none;
+      margin-top:12px;
+      color:var(--danger);
+      font-size:12px;
+      line-height:1.5;
+    }
+
+    .err.on{
+      display:block;
+    }
+
+    .result{
+      display:none;
+      margin-top:32px;
+      background:linear-gradient(180deg, #10233f 0%, #091b2f 100%);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:24px;
+      padding:22px 18px 18px;
+      box-shadow:var(--shadow);
+    }
+
+    .result.on{
+      display:block;
+    }
+
+    .score-line{
+      display:flex;
+      align-items:flex-end;
+      gap:10px;
+      margin-bottom:8px;
+    }
+
+    .score-num{
+      font-family:'Cormorant Garamond', serif;
+      font-size:64px;
+      line-height:0.8;
+      font-weight:600;
+      color:var(--white);
+      letter-spacing:-0.04em;
+    }
+
+    .score-of{
+      color:var(--pink-200);
+      text-transform:uppercase;
+      letter-spacing:0.16em;
+      font-size:11px;
+      margin-bottom:12px;
+      font-weight:700;
+    }
+
+    .score-sub{
+      color:rgba(249,247,245,0.72);
+      font-size:12px;
+      margin-bottom:14px;
+    }
+
+    .reply{
+      color:var(--white);
+      font-size:15px;
+      line-height:1.6;
+      white-space:pre-wrap;
+    }
+
+    .reply-load{
+      color:rgba(249,247,245,0.75);
+    }
+
+    .dot{
+      display:inline-block;
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:var(--pink-300);
+      margin-right:8px;
+      animation:blink 1s infinite;
+      vertical-align:middle;
+    }
+
+    @keyframes blink{
+      0%,100%{opacity:.25}
+      50%{opacity:1}
+    }
+
+    .done-btn{
+      width:100%;
+      margin-top:18px;
+      border:1px solid rgba(255,255,255,0.18);
+      background:transparent;
+      color:var(--white);
+      height:46px;
+      border-radius:999px;
+      font-size:13px;
+      font-weight:600;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      cursor:pointer;
+      transition: border-color .2s ease;
+    }
+
+    .done-btn:hover{
+      border-color:var(--pink-300);
+    }
+
+    footer{
+      padding:18px 0 44px;
+      text-align:center;
+      color:rgba(249,247,245,0.66);
+      font-size:11px;
+    }
+
+    .clear-link{
+      background:none;
+      border:none;
+      color:var(--pink-200);
+      text-decoration:underline;
+      cursor:pointer;
+      font:inherit;
+      margin-left:6px;
+    }
+
+    @media (max-width:480px){
+      .top-brand{
+        padding-top:32px;
+      }
+
+      .jec-lockup{
+        width:min(320px, 88vw);
+      }
+
+      .brand-line{
+        letter-spacing:0.22em;
+      }
+
+      .question h4{
+        font-size:15px;
+      }
+
+      .score-row{
+        gap:5px;
+      }
+
+      .score-btn{
+        height:36px;
+        font-size:12px;
+      }
+
+      .history-box{
+        padding:12px 12px 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrap">
+    <header class="top-brand">
+      <div class="jec-lockup" aria-label="Jayne Elizabeth Coaching">
+        <div class="jec-letter">JEC</div>
+      </div>
+      <div class="brand-line">Jayne Elizabeth Coaching</div>
+      <div class="tagline">One minute. One honest look. Then go put your feet up 🫶</div>
+    </header>
+
+    <section class="history-box">
+      <div class="history-top">
+        <h3>Your last 6</h3>
+        <div class="count" id="strip-note"></div>
+      </div>
+      <div id="strip"></div>
+    </section>
+
+    <main class="form-shell">
+      <div class="field">
+        <label for="name">Full name</label>
+        <input type="text" id="name" placeholder="First and last name" autocomplete="name" />
+        <div id="name-hint" class="name-hint">First and last name please, so Jayne knows which one of you it is.</div>
+      </div>
+
+      <div id="questions"></div>
+
+      <div class="field">
+        <label for="note">What actually happened today?</label>
+        <textarea id="note" placeholder="One line is fine. Where it went well, where it didn't, what got in the way."></textarea>
+      </div>
+
+      <button class="submit-btn" id="submit" disabled>Close the day</button>
+      <div class="err" id="err"></div>
+
+      <div id="result" class="result">
+        <div class="score-line">
+          <div id="score-num" class="score-num">0</div>
+          <div id="score-of" class="score-of">out of 60</div>
+        </div>
+        <div id="score-sub" class="score-sub"></div>
+        <div id="reply" class="reply reply-load"><span class="dot"></span>Jayne's having a look</div>
+        <button id="again" class="done-btn">Done for today</button>
+      </div>
+    </main>
+
+    <footer>
+      Saved on this phone only.
+      <button class="clear-link" id="clear">Clear my history</button>
+    </footer>
+  </div>
+
+  <script>
+    const API = 'https://zenith-fit.mark-5a5.workers.dev';
+    const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxt7ov_pKLeyjg8p-VnFXE4ewsAH7U8HKm8RVnXU3WBbJuaUU3zssefBmlUjProH1HO/exec';
+    const KEY = 'jec_daily_review';
+    const NAMEKEY = 'jec_review_name';
+
+    const PILLARS = [
+      { id: 'water', label: 'Water', hint: '10 is you hit your water target all day. 5 is about half.' },
+      { id: 'steps', label: 'Steps', hint: '10 is you hit your step target. 5 is about half.' },
+      { id: 'nutrition', label: 'Nutrition', hint: '10 is on it all day. 5 is half the day on, half the day off.' },
+      { id: 'training', label: 'Training', hint: '10 is session done, properly. 5 is you did something but not what was planned.', rest: true },
+      { id: 'sleep', label: 'Sleep', hint: "Last night's sleep, that counts as today. 10 is 7 plus hours and you woke up feeling it. 5 is short or broken." },
+      { id: 'mindset', label: 'Mindset', hint: '10 is you felt in control of the day. 5 is you got through it.' }
+    ];
+
+    let scores = {};
+    let restDay = false;
+
+    function logToSheets(tool, fields = {}, message = '') {
+      const payload = { tool, message, ...fields };
+      fetch(SHEETS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify(payload)
+      }).catch(() => {});
+    }
+
+    function loadHistory() {
+      try { return JSON.parse(localStorage.getItem(KEY) || '[]'); }
+      catch (e) { return []; }
+    }
+
+    function saveHistory(list) {
+      try { localStorage.setItem(KEY, JSON.stringify(list.slice(-30))); }
+      catch (e) {}
+    }
+
+    function todayKey() {
+      const d = new Date();
+      return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+    }
+
+    function shortDate(key) {
+      const d = new Date(key + 'T12:00:00');
+      return d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric' });
+    }
+
+    function longDate(key) {
+      const d = new Date(key + 'T12:00:00');
+      return d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+    }
+
+    function cleanName(raw) {
+      return (raw || '').trim().replace(/\s+/g, ' ');
+    }
+
+    function nameOk(raw) {
+      const n = cleanName(raw);
+      const parts = n.split(' ').filter(p => p.length >= 2);
+      return parts.length >= 2;
+    }
+
+    function firstName(raw) {
+      return cleanName(raw).split(' ')[0];
+    }
+
+    function renderStrip() {
+      const history = loadHistory().slice(-6);
+      const el = document.getElementById('strip');
+      const note = document.getElementById('strip-note');
+
+      if (!history.length) {
+        el.innerHTML = '<div class="empty"><b>Your first one.</b> Go.</div>';
+        note.textContent = '';
+        return;
+      }
+
+      note.textContent = history.length < 6 ? history.length + ' so far' : '';
+
+      const tk = todayKey();
+      const SHORT = { Nutrition: 'Food', Training: 'Train', Mindset: 'Mind' };
+
+      el.innerHTML =
+        '<div class="bars">' +
+        history.map(r => {
+          const pct = Math.max(8, Math.round((r.total / r.max) * 100));
+          const lowName = r.low ? (SHORT[r.low] || r.low) : '';
+          const lowScore = (r.scores && r.low)
+            ? r.scores[Object.keys(r.scores).find(k => k === r.low.toLowerCase())]
+            : '';
+          return `
+            <div class="bar-col">
+              <div class="bar-num">${r.total}</div>
+              <div class="bar ${r.date === tk ? 'today' : ''}" style="height:${pct}%"></div>
+              <div class="bar-lbl">${shortDate(r.date)}</div>
+              <div class="bar-low">${lowName}${lowScore ? ' ' + lowScore : ''}</div>
+            </div>
+          `;
+        }).join('') +
+        '</div>';
+
+      el.innerHTML += '<div class="pattern">Your score underneath each bar shows the one thing to work on.</div>';
+
+      if (history.length >= 3) {
+        const counts = {};
+        history.forEach(r => {
+          if (r.low) counts[r.low] = (counts[r.low] || 0) + 1;
+        });
+        const top = Object.keys(counts).sort((a, b) => counts[b] - counts[a])[0];
+        if (top && counts[top] >= 2) {
+          el.innerHTML += '<div class="pattern">Lowest most often: <b>' + top + '</b>, ' + counts[top] + ' of your last ' + history.length + '. That\'s the one to work on.</div>';
+        }
+      }
+    }
+
+    function renderQuestions() {
+      const container = document.getElementById('questions');
+
+      container.innerHTML = PILLARS.map(p => {
+        let buttons = '';
+        for (let i = 1; i <= 10; i++) {
+          buttons += `<button type="button" class="score-btn" data-p="${p.id}" data-v="${i}">${i}</button>`;
+        }
+
+        return `
+          <div class="question" id="q-${p.id}">
+            <div class="question-top">
+              <h4>${p.label}</h4>
+              ${p.rest ? '<button type="button" class="rest-btn" id="rest">Rest day</button>' : ''}
+            </div>
+            <div class="q-hint">${p.hint}</div>
+            <div class="score-row">${buttons}</div>
+          </div>
+        `;
+      }).join('');
+
+      document.querySelectorAll('.score-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const p = btn.dataset.p;
+          const v = Number(btn.dataset.v);
+          scores[p] = v;
+
+          const row = btn.parentElement;
+          row.querySelectorAll('.score-btn').forEach(x => {
+            x.classList.toggle('on', Number(x.dataset.v) === v);
+          });
+
+          checkReady();
+        });
+      });
+
+      const restButton = document.getElementById('rest');
+      if (restButton) {
+        restButton.addEventListener('click', e => {
+          restDay = !restDay;
+          e.currentTarget.classList.toggle('on', restDay);
+          document.getElementById('q-training').classList.toggle('off', restDay);
+
+          if (restDay) {
+            delete scores.training;
+            document.querySelectorAll('#q-training .score-btn').forEach(x => x.classList.remove('on'));
+          }
+
+          checkReady();
+        });
+      }
+    }
+
+    function checkReady() {
+      const scoresOk = PILLARS.every(p => (p.rest && restDay) || scores[p.id]);
+      const raw = document.getElementById('name').value;
+      const nOk = nameOk(raw);
+      const hint = document.getElementById('name-hint');
+      hint.classList.toggle('warn', cleanName(raw).length > 0 && !nOk);
+
+      document.getElementById('submit').disabled = !(scoresOk && nOk);
+    }
+
+    function buildPrompt(name, total, max, note, history) {
+      const lines = PILLARS.map(p => p.label + ': ' + ((p.rest && restDay) ? 'Rest day' : scores[p.id]));
+      const scored = PILLARS.filter(p => !(p.rest && restDay));
+      const low = scored.reduce((a, b) => scores[b.id] < scores[a.id] ? b : a);
+      const high = scored.reduce((a, b) => scores[b.id] > scores[a.id] ? b : a);
+
+      let prev = 'None. This is their first review.';
+      if (history.length) {
+        prev = history.slice(-6).map(r =>
+          longDate(r.date) + ': ' + r.total + ' out of ' + r.max + ', lowest ' + r.low + (r.note ? ', note: "' + r.note + '"' : '')
+        ).join('\n');
+      }
+
+      return 'Name: ' + (name || 'not given') + '\nToday: ' + longDate(todayKey()) + '\n\nScores out of 10:\n' + lines.join('\n') +
+             '\n\nTotal: ' + total + ' out of ' + max +
+             '\nLowest: ' + low.label + ' (' + scores[low.id] + ')' +
+             '\nHighest: ' + high.label + ' (' + scores[high.id] + ')' +
+             '\n\nTheir note: ' + note +
+             '\n\nPrevious reviews (most recent last):\n' + prev;
+    }
+
+    const SYS = `You are Jayne Elizabeth from Jayne Elizabeth Coaching, a UK women's coach specialising in lifestyle habits and holistic wellbeing. Someone has just rated their day out of 10 across water, steps, nutrition, training, sleep and mindset, and written a line about what happened.
+
+Give them honest, warm, specific feedback. You know them. You're on their side. You see what's working and what needs to shift.
+
+SHAPE. 3 short paragraphs then 🫶 on its own line. No headings, no labels, no bullets, no bold, no restating their scores as a list.
+Paragraph 1: the win. Pick their highest score and say why it matters for someone like them. Make it specific to their note if you can. If they gave a first name, use it here and nowhere else.
+Paragraph 2: the honest bit. Name the lowest score and say what you reckon actually went on, using their note. If they have previous reviews, compare to last time in plain numbers inside this paragraph so we can see the pattern. No excuses, just what happened.
+Paragraph 3: one focus for tomorrow. One thing. Tied to the lowest score. Small enough to do without thinking. Say what it is and when, using "we". If it helps, say what doesn't need to change so they don't think everything's broken.
+Then 🫶 on its own line.
+
+Paragraphs are lumpy, not even. One can be 3 sentences, the next can be 6 words. Under 110 words total.
+
+VOICE. British English. Full contractions always. Digits not words. Short punchy sentences. Warm, direct, certain. Talk like a mate who's been where they are and knows they can do this. Name the feeling, not the fix.
+
+NEVER. No dashes of any kind, commas and full stops only. Never "my friend", "here's the thing", "it's not X it's Y", "I'm going to be straight with you", "you've got this", "keep it up", "great job", "well done", "proud of you".
+
+EXAMPLE 1. First review. Steps 9, water 4, note: "Good day mostly, afternoon ran away with me and I forgot to drink."
+Steps 9 on a Monday. That's the one most people let slide first and you didn't, so that's the tone set for the week.
+
+Water's the low one at 4 and you've told me why. Afternoon ran away with you. Nine times out of 10 that's just no bottle in eyeline, nothing more complicated than that.
+
+Tomorrow we fill a bottle before you sit down in the morning and it lives on the desk all day. That's the only job. Nothing else changes.
+
+🫶
+
+EXAMPLE 2. Has history, last time 41 out of 60, today 34. Sleep 3, nutrition 8, note: "Little one up 4 times in the night, shattered."
+Nutrition 8 on 4 hours sleep is a proper win. Most people would've written the whole day off after a night like that and you didn't, so don't panic.
+
+Sleep's a 3 and that's the little one, not you. You were 41 last time, 34 today, and the whole gap is sleep and mindset, which is exactly what you'd expect when you're that tired. Nothing's gone backwards.
+
+Tomorrow we get you in bed 30 minutes earlier than you think you need to, phone out the room. Everything else can be average.
+
+🫶`;
+
+    async function ask(system, userMsg) {
+      const r = await fetch(API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-opus-4-6',
+          max_tokens: 400,
+          system,
+          messages: [{ role: 'user', content: userMsg }]
+        })
+      });
+
+      const d = await r.json();
+      if (d.error) throw new Error(d.error.message || 'Worker error');
+      return d.content[0].text;
+    }
+
+    async function submit() {
+      const btn = document.getElementById('submit');
+      const again = document.getElementById('again');
+      const err = document.getElementById('err');
+
+      err.classList.remove('on');
+
+      const fullName = cleanName(document.getElementById('name').value);
+      if (!nameOk(fullName)) {
+        err.textContent = 'Pop your first and last name in so Jayne knows which one of you it is.';
+        err.classList.add('on');
+        document.getElementById('name').focus();
+        return;
+      }
+
+      const first = firstName(fullName);
+      const note = document.getElementById('note').value.trim();
+
+      try { localStorage.setItem(NAMEKEY, fullName); } catch (e) {}
+
+      const scored = PILLARS.filter(p => !(p.rest && restDay));
+      const total = scored.reduce((sum, p) => sum + scores[p.id], 0);
+      const max = scored.length * 10;
+      const low = scored.reduce((a, b) => scores[b.id] < scores[a.id] ? b : a);
+      const lowScore = scores[low.id];
+      const snapshot = { ...scores };
+      const wasRest = restDay;
+      const history = loadHistory().filter(r => r.date !== todayKey());
+
+      document.getElementById('score-num').textContent = total;
+      document.getElementById('score-of').textContent = 'out of ' + max;
+      document.getElementById('score-sub').textContent = wasRest ? 'Rest day, so training sits this one out.' : '';
+
+      const reply = document.getElementById('reply');
+      reply.className = 'reply reply-load';
+      reply.innerHTML = '<span class="dot"></span>Jayne\'s having a look';
+
+      document.getElementById('result').classList.add('on');
+      document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      btn.disabled = true;
+      again.disabled = true;
+
+      try {
+        const text = await ask(SYS, buildPrompt(first, total, max, note, history));
+        reply.className = 'reply';
+        reply.textContent = text.trim();
+
+        const entry = {
+          date: todayKey(),
+          total,
+          max,
+          low: low.label,
+          rest: wasRest,
+          scores: snapshot,
+          note
+        };
+
+        history.push(entry);
+        saveHistory(history);
+        renderStrip();
+
+        logToSheets('Close the Day', {
+          field1_label: 'Name',
+          field1_value: fullName,
+          field2_label: 'Score',
+          field2_value: total + '/' + max,
+          field3_label: 'Lowest',
+          field3_value: low.label + ' ' + lowScore
+        }, 'Note: ' + (note || 'none') + '\n\nReply: ' + text.trim());
+
+      } catch (e) {
+        document.getElementById('result').classList.remove('on');
+        err.textContent = 'That didn\'t send. Check your signal and tap Close the day again.';
+        err.classList.add('on');
+        btn.disabled = false;
+      } finally {
+        again.disabled = false;
+      }
+    }
+
+    function resetForm() {
+      scores = {};
+      restDay = false;
+
+      document.querySelectorAll('.score-btn').forEach(x => x.classList.remove('on'));
+      const r = document.getElementById('rest');
+      if (r) {
+        r.classList.remove('on');
+      }
+
+      document.getElementById('q-training').classList.remove('off');
+      document.getElementById('note').value = '';
+      document.getElementById('result').classList.remove('on');
+
+      checkReady();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('submit').addEventListener('click', submit);
+    document.getElementById('again').addEventListener('click', resetForm);
+    document.getElementById('name').addEventListener('input', checkReady);
+
+    document.getElementById('clear').addEventListener('click', () => {
+      if (confirm('Clear your saved reviews on this phone? Your scores are still safe with Jayne.')) {
+        try { localStorage.removeItem(KEY); } catch (e) {}
+        renderStrip();
+      }
+    });
+
+    renderQuestions();
+    renderStrip();
+
+    try {
+      const savedName = localStorage.getItem(NAMEKEY);
+      if (savedName) document.getElementById('name').value = savedName;
+    } catch (e) {}
+
+    checkReady();
+  </script>
+</body>
+</html>
