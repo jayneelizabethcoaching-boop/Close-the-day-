@@ -579,9 +579,10 @@
   </div>
 
   <script>
-    const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxUeoKlgLKGFxqRrLGoutgJr9hNHhDIhuWvHFZWeTHzILWf4OdRccPPaLIPZO3dzlz-/exec';
+    const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyPdDDn8iO6Y18eHtyv_uf_3FHteP0nWF8pZfk14fLlK0b4TTgjcgHPSHz3pMRzv9V3/exec';
     const KEY = 'jec_daily_review';
     const NAMEKEY = 'jec_review_name';
+    const DRIVE_SHEET_NAME = 'Close the Day Response';
 
     const PILLARS = [
       { id: 'water', label: 'Hydration', hint: '10 is you hit your hydration target all day. 5 is about half.' },
@@ -594,6 +595,30 @@
 
     let scores = {};
     let restDay = false;
+
+    function saveToGoogleDrive(entry) {
+      const params = new URLSearchParams({
+        sheet: DRIVE_SHEET_NAME,
+        name: entry.name || '',
+        date: entry.date || '',
+        total: String(entry.total || ''),
+        max: String(entry.max || ''),
+        low: entry.low || '',
+        lowScore: String(entry.lowScore || ''),
+        rest: String(entry.rest || false),
+        note: entry.note || '',
+        scores: JSON.stringify(entry.scores || {})
+      });
+
+      fetch(SHEETS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: params.toString()
+      }).catch(() => {});
+    }
 
     function logToSheets(tool, fields = {}, message = '') {
       const payload = { tool, message, ...fields };
@@ -788,18 +813,22 @@
       try {
         const entry = {
           date: todayKey(),
+          name: fullName,
           total,
           max,
           low: low.label,
+          lowScore,
           rest: wasRest,
           scores: snapshot,
-          note
+          note,
+          createdAt: new Date().toISOString()
         };
 
         history.push(entry);
         saveHistory(history);
         renderStrip();
 
+        saveToGoogleDrive(entry);
         logToSheets('Close the Day', {
           field1_label: 'Name',
           field1_value: fullName,
