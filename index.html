@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Close the Day | Jayne Elizabeth Coaching</title>
+  <title>Close the Day</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -529,11 +529,11 @@
 
   <div class="wrap">
     <header class="top-brand">
-      <div class="jec-lockup" aria-label="Jayne Elizabeth Coaching">
-        <div class="jec-letter">JEC</div>
+      <div class="jec-lockup" aria-label="Close the Day">
+        <div class="jec-letter">C</div>
       </div>
-      <div class="brand-line">Jayne Elizabeth Coaching</div>
-      <div class="tagline">One minute. One honest look. Then go put your feet up 🫶</div>
+      <div class="brand-line">Close the Day</div>
+      <div class="tagline">One minute. One honest look. Then move on ✨</div>
     </header>
 
     <section class="history-box">
@@ -584,10 +584,10 @@
     const NAMEKEY = 'jec_review_name';
 
     const PILLARS = [
-      { id: 'water', label: 'Water', hint: '10 is you hit your water target all day. 5 is about half.' },
-      { id: 'steps', label: 'Steps', hint: '10 is you hit your step target. 5 is about half.' },
-      { id: 'nutrition', label: 'Nutrition', hint: '10 is on it all day. 5 is half the day on, half the day off.' },
-      { id: 'training', label: 'Training', hint: '10 is session done, properly. 5 is you did something but not what was planned.', rest: true },
+      { id: 'water', label: 'Hydration', hint: '10 is you hit your hydration target all day. 5 is about half.' },
+      { id: 'steps', label: 'Movement', hint: '10 is you moved well all day. 5 is you got through it but it felt harder.' },
+      { id: 'nutrition', label: 'Food', hint: '10 is on it all day. 5 is half the day on, half the day off.' },
+      { id: 'training', label: 'Recovery', hint: '10 is you felt restored and well supported. 5 is you did something but not what you needed.', rest: true },
       { id: 'sleep', label: 'Sleep', hint: "Last night's sleep, that counts as today. 10 is 7 plus hours and you woke up feeling it. 5 is short or broken." },
       { id: 'mindset', label: 'Mindset', hint: '10 is you felt in control of the day. 5 is you got through it.' }
     ];
@@ -648,7 +648,7 @@
       note.textContent = history.length < 6 ? history.length + ' so far' : '';
 
       const tk = todayKey();
-      const SHORT = { Nutrition: 'Food', Training: 'Train', Mindset: 'Mind' };
+      const SHORT = { Food: 'Food', Recovery: 'Recover', Mindset: 'Mind', Hydration: 'Hyd', Movement: 'Move' };
 
       el.innerHTML =
         '<div class="bars">' +
@@ -776,7 +776,7 @@
 
       document.getElementById('score-num').textContent = total;
       document.getElementById('score-of').textContent = 'out of ' + max;
-      document.getElementById('score-sub').textContent = wasRest ? 'Rest day, so training sits this one out.' : '';
+      document.getElementById('score-sub').textContent = wasRest ? 'Rest day, so recovery sits this one out.' : '';
       document.getElementById('reply').textContent = 'Saved 🫶';
 
       document.getElementById('result').classList.add('on');
